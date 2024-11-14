@@ -1,0 +1,3 @@
+[submodule "tm2_sunsense_config_am0"]
+	path = tm2_sunsense_config_am0
+	url = https://github.com/tm2space/tm2_sunsense_config_am0.git
