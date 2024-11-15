@@ -118,20 +118,20 @@ void read_sunsensor_byte_data(uint8_t sensor_reg, uint8_t *sensor_data)
  */
 bool read_sunsensor_block_data(uint8_t sensor_reg, uint8_t *sensor_data)
 {
-    if (sunsensor_fd > 0)
+    if (sunsensor_fd <= 0)
     {
-        if (i2c_smbus_write_byte(sunsensor_fd, sensor_reg) <= 0)
-        {
-            return false;
-        }
-
-        if (i2c_smbus_read_i2c_block_data(sunsensor_fd, sensor_reg, BYTES_TO_READ, (unsigned char *)sensor_data) != BYTES_TO_READ)
-        {
-            printf("Error SunSensor: I2C read register error\n");
-            return false;
-        }
+        return false;
+    }
+    if (i2c_smbus_write_byte(sunsensor_fd, sensor_reg) <= 0)
+    {
+        return false;
     }
 
+    if (i2c_smbus_read_i2c_block_data(sunsensor_fd, sensor_reg, BYTES_TO_READ, (unsigned char *)sensor_data) != BYTES_TO_READ)
+    {
+        printf("Error SunSensor: I2C read register error\n");
+        return false;
+    }
     return true;
 }
 
@@ -150,13 +150,14 @@ bool read_sunsensor_block_data(uint8_t sensor_reg, uint8_t *sensor_data)
  */
 bool write_sunsensor_word(uint8_t sensor_reg, uint16_t *sensor_data)
 {
-    if (sunsensor_fd > 0)
+    if (sunsensor_fd <= 0)
     {
-        if (i2c_smbus_write_word_data(sunsensor_fd, sensor_reg, *sensor_data) < 0)
-        {
-            printf("Error SunSensor: write register error\n");
-            return false;
-        }
+        return false;
+    }
+    if (i2c_smbus_write_word_data(sunsensor_fd, sensor_reg, *sensor_data) < 0)
+    {
+        printf("Error SunSensor: write register error\n");
+        return false;
     }
 
     return true;
