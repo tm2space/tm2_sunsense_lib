@@ -19,6 +19,12 @@
 #ifndef I2C_FUNCTIONS_H
 #define I2C_FUNCTIONS_H
 
+/* 
+ * Macro defining the number of bytes to read for block operations.
+ * Default value is set to 2.
+ */
+
+
 #define BYTES_TO_READ 2
 
 void _reset_sunsensor_fd();
